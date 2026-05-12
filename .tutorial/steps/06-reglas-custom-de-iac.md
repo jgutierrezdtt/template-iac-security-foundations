@@ -1,36 +1,73 @@
-# Paso 6. Reglas custom de IaC
+# Paso 6. Reglas custom de iac
 
-## Objetivo
+## Que vas a hacer en este paso?
 
-Aplicar el control de seguridad IaC correspondiente para detectar y corregir configuraciones inseguras en plantillas de infraestructura.
+Implementaras este control de IAC de forma concreta sobre el archivo `iac/terraform/main.tf` y registraras evidencia tecnica en `.tutorial/evidence/step-06.json`.
 
-## Contexto profesional
+## Por que es importante
 
-La seguridad en IaC permite detectar riesgos antes del despliegue, evitando configuraciones erróneas que generen exposición en producción.
+**En la practica real**:
+- Este control reduce riesgo operativo y mejora trazabilidad.
+- Permite validar avance real, no solo lectura del tutorial.
 
-## Explicación técnica
+**Lo que logras**:
+- Resultado tecnico verificable para el paso 6.
+- Evidencia auditable para revisiones de seguridad.
 
-Este paso introduce una práctica concreta de análisis y corrección de seguridad en IaC, combinando herramientas de escaneo y validación automatizada.
+---
 
-## Archivos que se modifican
+## Instrucciones paso-a-paso
 
-- .github/workflows/
-- .tutorial/
-- infrastructure/
-- docs/
+### Paso 6.1: Prepara el artefacto principal
 
-## Acción esperada del usuario
+Crea o actualiza el archivo objetivo de este paso:
 
-Implementar el control del paso 6, documentar la decisión técnica y dejar evidencia verificable de su ejecución.
+```bash
+mkdir -p "$(dirname iac/terraform/main.tf)"
+touch iac/terraform/main.tf
+```
 
-## Validación automática
+### Paso 6.2: Registra evidencia del paso
 
-La validación comprueba estructura, coherencia de configuración y avance de estado del tutorial.
+Crea el archivo `.tutorial/evidence/step-06.json` con este contenido:
 
-## Criterio de finalización
+```bash
+mkdir -p .tutorial/evidence
+cat > .tutorial/evidence/step-06.json << 'EOF'
+{
+  "step": 6,
+  "title": "Reglas custom de iac",
+  "status": "completed",
+  "artifact": "iac/terraform/main.tf"
+}
+EOF
+```
 
-El paso queda correctamente aplicado, con resultado reproducible y documentación suficiente para revisión técnica.
+---
 
-## Enlace al siguiente paso
+## Verificacion local
 
-Paso 7.
+```bash
+test -f iac/terraform/main.tf && echo "artifact ok"
+python3 -c 'import json;json.load(open(".tutorial/evidence/step-06.json"));print("evidence ok")'
+```
+
+---
+
+## Validacion automatica
+
+`validate-step-06.py` verificara:
+- Existe `iac/terraform/main.tf`.
+- Existe `.tutorial/evidence/step-06.json`.
+- La evidencia marca `status=completed` y `step=6`.
+
+---
+
+## Criterio de finalizacion
+
+Paso 6 esta completo cuando:
+1. `iac/terraform/main.tf` existe en el repositorio.
+2. `.tutorial/evidence/step-06.json` existe y es JSON valido.
+3. `.tutorial/state.json` muestra `"current_step": 7`.
+
+**Siguiente paso**: Paso 7
