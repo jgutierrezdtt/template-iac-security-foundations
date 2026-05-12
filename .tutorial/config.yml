@@ -1,0 +1,6 @@
+tutorial:
+  name: IaC Security Foundations
+  level: foundations
+  total_steps: 10
+  default_language: es
+  base_repository: jgutierrezdtt/security-tutorial-base
