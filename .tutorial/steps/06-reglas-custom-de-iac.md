@@ -2,34 +2,43 @@
 
 ## Objetivo de aprendizaje
 
-En este paso vas a practicar un control de IaC para entender que decision de configuracion aplicar y por que.
+Definir el alcance del análisis y las reglas que deben aplicarse.
 
-## Que debe hacer la persona participante
+## Archivo y seccion que debes modificar
 
-1. Revisar el contexto del control en este paso.
-2. Editar la configuracion esperada en `.checkov.yml`.
-3. Guardar y subir el cambio en el flujo normal del repositorio (commit/push o PR).
+- Archivo objetivo: `.checkov.yml`.
+- Seccion donde aplicar el cambio: configuración del escáner IaC.
+- Resultado esperado: el repositorio incorpora el control de este paso de forma legible y revisable.
 
-## Que configurar exactamente
+## Cambio que debes introducir
 
-- Campo o seccion objetivo: relacionado con "Reglas custom de iac".
-- Ubicacion principal: `.checkov.yml`.
-- Resultado esperado: que la configuracion refleje el control del paso 6.
+Copia este bloque como base y adáptalo al contexto real del repositorio:
 
-## Checklist de configuracion
+```yaml
+framework:
+  - terraform
+check:
+  - CKV_AWS_20
+skip-check:
+  - CKV_AWS_18
+```
 
-- El cambio del paso 6 esta presente en `.checkov.yml`.
-- El cambio es coherente con el objetivo del paso.
-- El repositorio incluye la evidencia de progreso para este paso.
+## Como adaptarlo correctamente
 
-## Validacion automatica (sin ejecucion manual)
+- No añadas skips permanentes sin documentar el motivo.
+- Mantén solo checks relevantes para el tipo de plantilla del repositorio.
 
-- `validate-steps.yml` se ejecuta automaticamente por eventos `push`, `pull_request` y `workflow_dispatch`.
-- `scripts/validate-step-06.py` valida que el control de este paso esta aplicado.
-- El estado de progreso se refleja en `.tutorial/state.json`.
+## Que valida el workflow automaticamente
+
+- `validate-steps.yml` se ejecuta con `push`, `pull_request` y `workflow_dispatch`.
+- `scripts/validate-step-06.py` comprueba el archivo y los marcadores esperados de este paso.
+- Debe encontrar el marcador `framework:` en `.checkov.yml`.
+- Debe encontrar el marcador `- terraform` en `.checkov.yml`.
+- Debe encontrar el marcador `check:` en `.checkov.yml`.
+- Debe encontrar el marcador `skip-check:` en `.checkov.yml`.
 
 ## Criterio de finalizacion
 
-El paso 6 se marca como completado cuando GitHub Actions reporta exito para `validate-step-06.py`.
+El paso 6 queda completado cuando el workflow de GitHub Actions valida este cambio sin errores.
 
 Siguiente paso: Paso 7.

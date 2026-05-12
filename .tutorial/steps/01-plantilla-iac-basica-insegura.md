@@ -2,34 +2,47 @@
 
 ## Objetivo de aprendizaje
 
-En este paso vas a practicar un control de IaC para entender que decision de configuracion aplicar y por que.
+Modificar la plantilla IaC para representar y luego corregir un riesgo real.
 
-## Que debe hacer la persona participante
+## Archivo y seccion que debes modificar
 
-1. Revisar el contexto del control en este paso.
-2. Editar la configuracion esperada en `.checkov.yml`.
-3. Guardar y subir el cambio en el flujo normal del repositorio (commit/push o PR).
+- Archivo objetivo: `iac/main.tf`.
+- Seccion donde aplicar el cambio: recurso Terraform del ejemplo.
+- Resultado esperado: el repositorio incorpora el control de este paso de forma legible y revisable.
 
-## Que configurar exactamente
+## Cambio que debes introducir
 
-- Campo o seccion objetivo: relacionado con "Plantilla iac basica insegura".
-- Ubicacion principal: `.checkov.yml`.
-- Resultado esperado: que la configuracion refleje el control del paso 1.
+Copia este bloque como base y adáptalo al contexto real del repositorio:
 
-## Checklist de configuracion
+```hcl
+resource "aws_s3_bucket" "app" {
+  bucket = "demo-bucket"
+}
 
-- El cambio del paso 1 esta presente en `.checkov.yml`.
-- El cambio es coherente con el objetivo del paso.
-- El repositorio incluye la evidencia de progreso para este paso.
+resource "aws_s3_bucket_public_access_block" "app" {
+  bucket                  = aws_s3_bucket.app.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+```
 
-## Validacion automatica (sin ejecucion manual)
+## Como adaptarlo correctamente
 
-- `validate-steps.yml` se ejecuta automaticamente por eventos `push`, `pull_request` y `workflow_dispatch`.
-- `scripts/validate-step-01.py` valida que el control de este paso esta aplicado.
-- El estado de progreso se refleja en `.tutorial/state.json`.
+- Usa un recurso sencillo para que el hallazgo sea visible.
+- Si el paso es sobre secretos, evita dejar valores literales en variables o recursos.
+
+## Que valida el workflow automaticamente
+
+- `validate-steps.yml` se ejecuta con `push`, `pull_request` y `workflow_dispatch`.
+- `scripts/validate-step-01.py` comprueba el archivo y los marcadores esperados de este paso.
+- Debe encontrar el marcador `resource "aws_s3_bucket"` en `iac/main.tf`.
+- Debe encontrar el marcador `aws_s3_bucket_public_access_block` en `iac/main.tf`.
+- Debe encontrar el marcador `block_public_policy` en `iac/main.tf`.
 
 ## Criterio de finalizacion
 
-El paso 1 se marca como completado cuando GitHub Actions reporta exito para `validate-step-01.py`.
+El paso 1 queda completado cuando el workflow de GitHub Actions valida este cambio sin errores.
 
 Siguiente paso: Paso 2.
