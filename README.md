@@ -23,7 +23,7 @@ Desarrolladores, ingenieros DevOps y equipos de plataforma que quieran incorpora
 
 ## Inicio del tutorial
 
-[![Empezar tutorial](https://img.shields.io/badge/Empezar%20tutorial-0b69ff?style=for-the-badge&logo=github&logoColor=white)](https://github.com/new?template_name=template-iac-security-foundations&template_owner=jgutierrezdtt)
+[![Empezar tutorial](https://img.shields.io/badge/Empezar%20tutorial-0b69ff?style=for-the-badge&logo=github&logoColor=white)](https://github.com/jgutierrezdtt/template-iac-security-foundations/fork)
 
 ## Acceso al repositorio
 
