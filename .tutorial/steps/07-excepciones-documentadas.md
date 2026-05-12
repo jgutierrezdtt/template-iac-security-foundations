@@ -2,40 +2,51 @@
 
 ## Objetivo de aprendizaje
 
-Registrar desviaciones justificadas del baseline IaC.
+Una excepción sin trazabilidad acaba siendo una omisión permanente. Este paso obliga a documentar qué se acepta y por cuánto tiempo.
+
+## Que vas a cambiar y por que
+
+Crea un registro de excepciones donde cada caso tenga recurso, motivo y fecha de caducidad.
 
 ## Archivo y seccion que debes modificar
 
 - Archivo objetivo: `docs/iac-exceptions.yml`.
-- Seccion donde aplicar el cambio: catálogo de excepciones IaC.
-- Resultado esperado: el repositorio incorpora el control de este paso de forma legible y revisable.
+- Aplícalo en la parte del archivo que corresponde al título del paso.
+- Si el archivo aún no existe, créalo con este contenido inicial y luego evoluciona desde ahí en los siguientes pasos.
 
-## Cambio que debes introducir
+## Cambio base recomendado
 
-Copia este bloque como base y adáptalo al contexto real del repositorio:
+Este bloque no es para pegar a ciegas: úsalo como punto de partida y ajústalo al contexto del repositorio.
 
 ```yaml
 exceptions:
   - check_id: CKV_AWS_20
     resource: aws_s3_bucket.app
-    reason: "control temporal en migracion"
+    reason: "control temporal mientras se migra el servicio"
     expires_on: "2026-12-31"
 ```
 
 ## Como adaptarlo correctamente
 
-- La excepción debe apuntar a un recurso concreto.
-- Evita excepciones abiertas sin fecha de revisión.
+- Registra una excepción por recurso y por check, no una excepción genérica.
+- Incluye una fecha de revisión o caducidad desde el principio.
+- Si la excepción afecta a producción, deja el motivo en lenguaje claro.
+
+## Que deberia verse al terminar
+
+- Cada excepción apunta a un recurso concreto.
+- Se entiende el motivo de negocio o técnico.
+- Existe un campo de caducidad revisable.
 
 ## Que valida el workflow automaticamente
 
 - `validate-steps.yml` se ejecuta con `push`, `pull_request` y `workflow_dispatch`.
-- `scripts/validate-step-07.py` comprueba el archivo y los marcadores esperados de este paso.
-- Debe encontrar el marcador `exceptions:` en `docs/iac-exceptions.yml`.
-- Debe encontrar el marcador `check_id:` en `docs/iac-exceptions.yml`.
-- Debe encontrar el marcador `resource:` en `docs/iac-exceptions.yml`.
-- Debe encontrar el marcador `reason:` en `docs/iac-exceptions.yml`.
-- Debe encontrar el marcador `expires_on:` en `docs/iac-exceptions.yml`.
+- `scripts/validate-step-07.py` comprueba este paso contra el archivo configurado.
+- El workflow busca `exceptions:` dentro de `docs/iac-exceptions.yml`.
+- El workflow busca `check_id:` dentro de `docs/iac-exceptions.yml`.
+- El workflow busca `resource:` dentro de `docs/iac-exceptions.yml`.
+- El workflow busca `reason:` dentro de `docs/iac-exceptions.yml`.
+- El workflow busca `expires_on:` dentro de `docs/iac-exceptions.yml`.
 
 ## Criterio de finalizacion
 

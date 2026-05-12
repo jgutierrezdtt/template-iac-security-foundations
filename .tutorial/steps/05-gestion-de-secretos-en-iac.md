@@ -2,44 +2,53 @@
 
 ## Objetivo de aprendizaje
 
-Modificar la plantilla IaC para representar y luego corregir un riesgo real.
+Un secreto escrito directamente en Terraform termina en el repositorio, en el plan o en el estado. Este paso enseña a sustituir valores hardcodeados por variables sensibles.
+
+## Que vas a cambiar y por que
+
+Mueve cualquier valor sensible a una variable marcada como `sensitive = true` y referencia esa variable desde el recurso.
 
 ## Archivo y seccion que debes modificar
 
 - Archivo objetivo: `iac/main.tf`.
-- Seccion donde aplicar el cambio: recurso Terraform del ejemplo.
-- Resultado esperado: el repositorio incorpora el control de este paso de forma legible y revisable.
+- Aplícalo en la parte del archivo que corresponde al título del paso.
+- Si el archivo aún no existe, créalo con este contenido inicial y luego evoluciona desde ahí en los siguientes pasos.
 
-## Cambio que debes introducir
+## Cambio base recomendado
 
-Copia este bloque como base y adáptalo al contexto real del repositorio:
+Este bloque no es para pegar a ciegas: úsalo como punto de partida y ajústalo al contexto del repositorio.
 
 ```hcl
-resource "aws_s3_bucket" "app" {
-  bucket = "demo-bucket"
+variable "db_password" {
+  type      = string
+  sensitive = true
 }
 
-resource "aws_s3_bucket_public_access_block" "app" {
-  bucket                  = aws_s3_bucket.app.id
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
+resource "aws_db_instance" "app" {
+  identifier = "demo-db"
+  password   = var.db_password
 }
 ```
 
 ## Como adaptarlo correctamente
 
-- Usa un recurso sencillo para que el hallazgo sea visible.
-- Si el paso es sobre secretos, evita dejar valores literales en variables o recursos.
+- Si usas `iac/main.tf`, declara la variable en `iac/variables.tf` o al principio del mismo archivo.
+- No dejes ejemplos con contraseñas literales ni tokens ficticios dentro del recurso final.
+- La idea del paso es mostrar el patrón correcto: variable sensible y referencia desde el recurso.
+
+## Que deberia verse al terminar
+
+- La plantilla usa `variable` para el dato sensible.
+- La variable está marcada como sensible.
+- El recurso ya no contiene un secreto literal.
 
 ## Que valida el workflow automaticamente
 
 - `validate-steps.yml` se ejecuta con `push`, `pull_request` y `workflow_dispatch`.
-- `scripts/validate-step-05.py` comprueba el archivo y los marcadores esperados de este paso.
-- Debe encontrar el marcador `resource "aws_s3_bucket"` en `iac/main.tf`.
-- Debe encontrar el marcador `aws_s3_bucket_public_access_block` en `iac/main.tf`.
-- Debe encontrar el marcador `block_public_policy` en `iac/main.tf`.
+- `scripts/validate-step-05.py` comprueba este paso contra el archivo configurado.
+- El workflow busca `resource "aws_s3_bucket"` dentro de `iac/main.tf`.
+- El workflow busca `aws_s3_bucket_public_access_block` dentro de `iac/main.tf`.
+- El workflow busca `block_public_policy` dentro de `iac/main.tf`.
 
 ## Criterio de finalizacion
 

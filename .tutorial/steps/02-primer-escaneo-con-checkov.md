@@ -2,40 +2,49 @@
 
 ## Objetivo de aprendizaje
 
-Definir el alcance del análisis y las reglas que deben aplicarse.
+El escáner no aporta valor si no queda claro qué tecnología debe analizar y qué controles son relevantes para el ejemplo.
+
+## Que vas a cambiar y por que
+
+Declara en `.checkov.yml` el framework y los checks que vas a usar en el tutorial.
 
 ## Archivo y seccion que debes modificar
 
 - Archivo objetivo: `.checkov.yml`.
-- Seccion donde aplicar el cambio: configuración del escáner IaC.
-- Resultado esperado: el repositorio incorpora el control de este paso de forma legible y revisable.
+- Aplícalo en la parte del archivo que corresponde al título del paso.
+- Si el archivo aún no existe, créalo con este contenido inicial y luego evoluciona desde ahí en los siguientes pasos.
 
-## Cambio que debes introducir
+## Cambio base recomendado
 
-Copia este bloque como base y adáptalo al contexto real del repositorio:
+Este bloque no es para pegar a ciegas: úsalo como punto de partida y ajústalo al contexto del repositorio.
 
 ```yaml
 framework:
   - terraform
 check:
   - CKV_AWS_20
-skip-check:
-  - CKV_AWS_18
 ```
 
 ## Como adaptarlo correctamente
 
-- No añadas skips permanentes sin documentar el motivo.
-- Mantén solo checks relevantes para el tipo de plantilla del repositorio.
+- Usa solo el framework que realmente aparece en el repositorio, en este caso Terraform.
+- No añadas `skip-check` gratuitos si todavía no has explicado la excepción.
+- Mantén el archivo corto para que se entienda que controla el escáner.
+
+## Que deberia verse al terminar
+
+- Se ve claramente el framework que se analiza.
+- Hay al menos un check explicitado o una política del escáner clara.
+- El archivo sirve de entrada para el workflow automático.
 
 ## Que valida el workflow automaticamente
 
 - `validate-steps.yml` se ejecuta con `push`, `pull_request` y `workflow_dispatch`.
-- `scripts/validate-step-02.py` comprueba el archivo y los marcadores esperados de este paso.
-- Debe encontrar el marcador `framework:` en `.checkov.yml`.
-- Debe encontrar el marcador `- terraform` en `.checkov.yml`.
-- Debe encontrar el marcador `check:` en `.checkov.yml`.
-- Debe encontrar el marcador `skip-check:` en `.checkov.yml`.
+- `scripts/validate-step-02.py` comprueba este paso contra el archivo configurado.
+- El workflow busca `framework:` dentro de `.checkov.yml`.
+- El workflow busca `- terraform` dentro de `.checkov.yml`.
+- El workflow busca `check:` dentro de `.checkov.yml`.
+- El workflow busca `skip-check:` dentro de `.checkov.yml`.
 
 ## Criterio de finalizacion
 
