@@ -2,11 +2,11 @@
 
 ## Objetivo de aprendizaje
 
-Un control IaC solo es útil si se ejecuta de forma automática en los cambios reales del repositorio.
+Entender que un control IaC deja de ser opcional cuando entra en la ruta normal de cambios del repositorio y se ejecuta automáticamente sobre `push` y `pull_request`.
 
 ## Que vas a cambiar y por que
 
-Añade un workflow de GitHub Actions que lance el análisis IaC en push y pull request.
+En este paso vas a definir `.github/workflows/iac.yml` para que el análisis de infraestructura se lance en eventos reales de desarrollo. El objetivo es mover el escaneo desde una comprobación manual o puntual a una puerta automatizada y repetible.
 
 ## Archivo y seccion que debes modificar
 
@@ -33,12 +33,14 @@ jobs:
 - Usa un nombre de workflow que deje claro que analiza infraestructura.
 - Mantén triggers de `push` y `pull_request` para que el control se vea antes del merge.
 - Si el repositorio tiene varios directorios IaC, delimita la ruta en el comando de análisis.
+- Mantén el job `checkov` como unidad clara de análisis para que la intención del workflow se entienda sin esfuerzo.
 
 ## Que deberia verse al terminar
 
 - Existe un workflow específico para IaC.
 - El job está orientado al escaneo, no mezclado con build o test de aplicación.
 - La automatización se entiende al leer el YAML.
+- Queda claro que el control se ejecuta en el flujo normal de colaboración del repositorio.
 
 ## Que valida el workflow automaticamente
 
