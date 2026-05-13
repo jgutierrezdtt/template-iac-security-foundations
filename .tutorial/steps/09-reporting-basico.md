@@ -2,11 +2,11 @@
 
 ## Objetivo de aprendizaje
 
-Detectar un hallazgo no basta; hay que convertirlo en un reporte que explique qué recurso falla, por qué importa y cómo se remedia.
+Entender que un hallazgo aislado no crea seguimiento. Este paso convierte el análisis previo en un formato de reporting básico que pueda revisarse con cierta regularidad.
 
 ## Que vas a cambiar y por que
 
-Estructura un documento donde cada hallazgo se conecte con el recurso afectado y con una decisión de remediación.
+Vas a reforzar `docs/iac-reporting.md` para que funcione como reporte sencillo del estado de seguridad IaC. No basta con registrar un finding: el documento debe servir para revisar hallazgos, recursos afectados, riesgo y plan de remediación como una vista mínima de seguimiento.
 
 ## Archivo y seccion que debes modificar
 
@@ -29,6 +29,7 @@ Este bloque no es para pegar a ciegas: úsalo como punto de partida y ajústalo 
 
 - Usa el nombre exacto del recurso Terraform al describir el hallazgo.
 - Separa el riesgo técnico del plan de remediación para que el documento sirva en revisión.
+- Redáctalo como un reporte que podría compartirse periódicamente, no como una nota improvisada.
 - En el paso final, resume qué controles quedaron implantados.
 
 ## Que deberia verse al terminar
@@ -36,6 +37,7 @@ Este bloque no es para pegar a ciegas: úsalo como punto de partida y ajústalo 
 - El documento tiene secciones legibles y útiles para revisión.
 - Se identifica qué recurso está afectado.
 - La decisión o siguiente acción queda explícita.
+- El formato permite reutilizar el documento como reporting básico del laboratorio.
 
 ## Que valida el workflow automaticamente
 
