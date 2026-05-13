@@ -2,17 +2,17 @@
 
 ## Objetivo de aprendizaje
 
-Un secreto escrito directamente en Terraform termina en el repositorio, en el plan o en el estado. Este paso enseña a sustituir valores hardcodeados por variables sensibles.
+Entender que un secreto escrito directamente en Terraform termina contaminando el código, el plan o el estado. El aprendizaje de este paso es separar el manejo de datos sensibles del resto de la plantilla sin romper la base de infraestructura ya construida.
 
 ## Que vas a cambiar y por que
 
-Mueve cualquier valor sensible a una variable marcada como `sensitive = true` y referencia esa variable desde el recurso.
+Este paso se apoya en el mismo `iac/main.tf` que vienes usando con el bucket S3. La idea es introducir el criterio correcto para cualquier dato sensible que aparezca en esa plantilla: no dejar valores literales y moverlos a variables u otro mecanismo controlado. Al mismo tiempo, la estructura base del bucket y su bloqueo público debe mantenerse, porque el workflow sigue usándola como referencia de validación.
 
 ## Archivo y seccion que debes modificar
 
 - Archivo objetivo: `iac/main.tf`.
-- Aplícalo en la parte del archivo que corresponde al título del paso.
-- Si el archivo aún no existe, créalo con este contenido inicial y luego evoluciona desde ahí en los siguientes pasos.
+- Mantén en este archivo el recurso S3 que ya sirve como base del laboratorio.
+- Si introduces parámetros sensibles, colócalos como variables y evita mezclarlos con literales inseguros dentro del recurso.
 
 ## Cambio base recomendado
 
@@ -24,9 +24,13 @@ variable "db_password" {
   sensitive = true
 }
 
-resource "aws_db_instance" "app" {
-  identifier = "demo-db"
-  password   = var.db_password
+resource "aws_s3_bucket" "app" {
+  bucket = "demo-bucket"
+}
+
+resource "aws_s3_bucket_public_access_block" "app" {
+  bucket              = aws_s3_bucket.app.id
+  block_public_policy = true
 }
 ```
 
@@ -34,13 +38,14 @@ resource "aws_db_instance" "app" {
 
 - Si usas `iac/main.tf`, declara la variable en `iac/variables.tf` o al principio del mismo archivo.
 - No dejes ejemplos con contraseñas literales ni tokens ficticios dentro del recurso final.
-- La idea del paso es mostrar el patrón correcto: variable sensible y referencia desde el recurso.
+- Mantén los marcadores del bucket S3 porque el flujo automático todavía comprueba esa estructura.
+- El patrón importante es separar datos sensibles de la configuración estática, aunque este template siga validando sobre el mismo recurso base.
 
 ## Que deberia verse al terminar
 
-- La plantilla usa `variable` para el dato sensible.
-- La variable está marcada como sensible.
-- El recurso ya no contiene un secreto literal.
+- La plantilla conserva el bucket base y su bloqueo público.
+- Si aparece algún dato sensible en el archivo, queda modelado como variable y no como literal.
+- El archivo sigue siendo utilizable como base para los pasos posteriores.
 
 ## Que valida el workflow automaticamente
 
