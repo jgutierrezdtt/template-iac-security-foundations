@@ -2,17 +2,17 @@
 
 ## Objetivo de aprendizaje
 
-El escáner no aporta valor si no queda claro qué tecnología debe analizar y qué controles son relevantes para el ejemplo.
+Entender que el primer escaneo útil no consiste solo en ejecutar una herramienta, sino en dejar claro qué tecnología analiza y qué política mínima de checks aplica sobre el repositorio.
 
 ## Que vas a cambiar y por que
 
-Declara en `.checkov.yml` el framework y los checks que vas a usar en el tutorial.
+Vas a crear o completar `.checkov.yml` para declarar el framework objetivo y una política mínima de control con `check:` y `skip-check:`. En un laboratorio de foundations, esto ayuda a que el escaneo sea entendible desde el primer momento: qué se está buscando y qué casos se dejan fuera de forma explícita.
 
 ## Archivo y seccion que debes modificar
 
 - Archivo objetivo: `.checkov.yml`.
-- Aplícalo en la parte del archivo que corresponde al título del paso.
-- Si el archivo aún no existe, créalo con este contenido inicial y luego evoluciona desde ahí en los siguientes pasos.
+- Si el archivo aún no existe, créalo en este paso.
+- Mantén una configuración corta para que la intención del escáner se pueda leer de un vistazo.
 
 ## Cambio base recomendado
 
@@ -23,18 +23,21 @@ framework:
   - terraform
 check:
   - CKV_AWS_20
+skip-check:
+  - CKV_AWS_21
 ```
 
 ## Como adaptarlo correctamente
 
 - Usa solo el framework que realmente aparece en el repositorio, en este caso Terraform.
-- No añadas `skip-check` gratuitos si todavía no has explicado la excepción.
+- Si añades `skip-check`, trátalo como una decisión visible del laboratorio y no como una omisión escondida.
 - Mantén el archivo corto para que se entienda que controla el escáner.
+- La combinación de `check:` y `skip-check:` debe dejar clara una política mínima y revisable.
 
 ## Que deberia verse al terminar
 
 - Se ve claramente el framework que se analiza.
-- Hay al menos un check explicitado o una política del escáner clara.
+- Hay al menos un check explicitado y una exclusión declarada de forma visible.
 - El archivo sirve de entrada para el workflow automático.
 
 ## Que valida el workflow automaticamente
