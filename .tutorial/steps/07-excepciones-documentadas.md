@@ -2,11 +2,11 @@
 
 ## Objetivo de aprendizaje
 
-Una excepción sin trazabilidad acaba siendo una omisión permanente. Este paso obliga a documentar qué se acepta y por cuánto tiempo.
+Una excepción sin trazabilidad acaba convirtiéndose en deuda invisible. Este paso enseña a documentar qué riesgo se acepta, sobre qué recurso recae y hasta cuándo puede seguir abierto.
 
 ## Que vas a cambiar y por que
 
-Crea un registro de excepciones donde cada caso tenga recurso, motivo y fecha de caducidad.
+Vas a crear `docs/iac-exceptions.yml` como registro explícito de excepciones. La intención es que una desviación del baseline no quede escondida en comentarios o en conversaciones temporales, sino en una estructura revisable con check afectado, recurso, motivo y fecha de caducidad.
 
 ## Archivo y seccion que debes modificar
 
@@ -31,12 +31,14 @@ exceptions:
 - Registra una excepción por recurso y por check, no una excepción genérica.
 - Incluye una fecha de revisión o caducidad desde el principio.
 - Si la excepción afecta a producción, deja el motivo en lenguaje claro.
+- Redacta el `reason` de forma que otra persona pueda entender por qué la desviación se acepta y qué la haría desaparecer.
 
 ## Que deberia verse al terminar
 
 - Cada excepción apunta a un recurso concreto.
 - Se entiende el motivo de negocio o técnico.
 - Existe un campo de caducidad revisable.
+- El documento se puede usar como evidencia de seguimiento y no solo como anotación puntual.
 
 ## Que valida el workflow automaticamente
 
