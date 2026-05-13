@@ -2,11 +2,11 @@
 
 ## Objetivo de aprendizaje
 
-Detectar un hallazgo no basta; hay que convertirlo en un reporte que explique qué recurso falla, por qué importa y cómo se remedia.
+Cerrar el recorrido foundations con una vista final del estado de seguridad IaC: qué se detectó, qué recursos estuvieron implicados, qué riesgo quedó descrito y cómo se decidió remediarlo.
 
 ## Que vas a cambiar y por que
 
-Estructura un documento donde cada hallazgo se conecte con el recurso afectado y con una decisión de remediación.
+En este último paso vas a usar `docs/iac-reporting.md` como resumen final del laboratorio. La idea es que el documento no solo sirva para un hallazgo puntual, sino también para demostrar que el repositorio termina el tutorial con una narrativa mínima de findings, recursos, riesgo y plan de remediación.
 
 ## Archivo y seccion que debes modificar
 
@@ -29,13 +29,15 @@ Este bloque no es para pegar a ciegas: úsalo como punto de partida y ajústalo 
 
 - Usa el nombre exacto del recurso Terraform al describir el hallazgo.
 - Separa el riesgo técnico del plan de remediación para que el documento sirva en revisión.
-- En el paso final, resume qué controles quedaron implantados.
+- En este paso final, haz que el reporte sirva como cierre del recorrido y no solo como nota intermedia.
+- Resume de forma clara qué controles quedaron implantados a nivel de foundations.
 
 ## Que deberia verse al terminar
 
 - El documento tiene secciones legibles y útiles para revisión.
 - Se identifica qué recurso está afectado.
 - La decisión o siguiente acción queda explícita.
+- El documento puede leerse como evidencia final de lo aprendido en el tutorial.
 
 ## Que valida el workflow automaticamente
 
