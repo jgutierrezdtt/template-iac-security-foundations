@@ -2,39 +2,42 @@
 
 ## Objetivo de aprendizaje
 
-Los checks por defecto no siempre cubren el baseline interno de tu organización. Este paso enseña a añadir criterio propio.
+Entender que los checks por defecto no siempre bastan y que, incluso en un laboratorio básico, conviene expresar criterio propio dentro de la configuración del escáner.
 
 ## Que vas a cambiar y por que
 
-Introduce una regla o política personalizada que complemente el escaneo estándar.
+En este paso vas a reforzar `.checkov.yml` como lugar donde se declara una política mínima propia. En este template, ese criterio se representa con la combinación de `framework:`, `check:` y `skip-check:`: suficiente para mostrar que el equipo no acepta ciegamente la configuración por defecto del escáner.
 
 ## Archivo y seccion que debes modificar
 
 - Archivo objetivo: `.checkov.yml`.
-- Aplícalo en la parte del archivo que corresponde al título del paso.
-- Si el archivo aún no existe, créalo con este contenido inicial y luego evoluciona desde ahí en los siguientes pasos.
+- Mantén el archivo corto y legible.
+- Usa esta configuración para dejar claro qué aplica y qué queda explícitamente fuera del análisis inicial.
 
 ## Cambio base recomendado
 
 Este bloque no es para pegar a ciegas: úsalo como punto de partida y ajústalo al contexto del repositorio.
 
 ```yaml
-external-checks-dir: policies/checkov
 framework:
   - terraform
+check:
+  - CKV_AWS_20
+skip-check:
+  - CKV_AWS_21
 ```
 
 ## Como adaptarlo correctamente
 
-- Si tu repositorio aún no tiene carpeta de políticas, créala junto a la configuración del escáner.
-- La regla custom debe cubrir un requisito que no esté ya bien cubierto por los checks estándar.
-- Describe el control con un nombre legible, no solo con un identificador interno.
+- Usa `check:` para mostrar qué controles consideras esenciales en el baseline.
+- Usa `skip-check:` solo cuando la exclusión sea una decisión visible y no una forma de esconder ruido.
+- Aunque sea una configuración mínima, debe leerse como política del equipo y no como accidente del tutorial.
 
 ## Que deberia verse al terminar
 
-- Existe una política o regla adicional a la configuración base.
+- Existe una política mínima propia dentro del archivo de configuración.
 - La intención del control se entiende leyendo el archivo.
-- El validador puede localizar los marcadores del control nuevo.
+- El validador puede localizar los marcadores que representan ese criterio propio.
 
 ## Que valida el workflow automaticamente
 
