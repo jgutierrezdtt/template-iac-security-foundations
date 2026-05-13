@@ -2,11 +2,11 @@
 
 ## Objetivo de aprendizaje
 
-Un recurso en la nube con permisos excesivos suele quedar expuesto por una ACL o una policy demasiado abierta. El objetivo de este paso es cerrar esa exposición desde la propia plantilla.
+Entender cómo se corrige una exposición por permisos excesivos directamente en la plantilla IaC, sin depender de acciones manuales posteriores en la consola cloud.
 
 ## Que vas a cambiar y por que
 
-Añade al recurso principal un control explícito de bloqueo de acceso público para que el repositorio muestre la corrección, no solo la describa.
+En este paso vas a reforzar `iac/main.tf` con un bloqueo explícito de acceso público sobre el bucket principal. El valor del cambio no está solo en "tener el flag", sino en dejar escrita la intención de mínimo privilegio dentro del código de infraestructura.
 
 ## Archivo y seccion que debes modificar
 
@@ -37,12 +37,14 @@ resource "aws_s3_bucket_public_access_block" "app" {
 - Si el archivo `iac/main.tf` no existe todavía, créalo y coloca el recurso de ejemplo ahí.
 - Mantén el nombre del bucket simple; lo importante del paso es el bloqueo público, no el naming.
 - No mezcles este cambio con secretos, cifrado o versionado; aquí solo se corrige exposición pública.
+- Piensa en este recurso como una evidencia visible de que la exposición se remedia en código y no fuera del repositorio.
 
 ## Que deberia verse al terminar
 
 - Se ve un bucket y, justo después, un recurso `aws_s3_bucket_public_access_block` asociado a él.
 - Los campos `block_public_acls`, `block_public_policy`, `ignore_public_acls` y `restrict_public_buckets` están a `true`.
 - La corrección es legible sin tener que deducirla desde un comentario.
+- Queda claro que el control persigue reducir superficie pública por defecto.
 
 ## Que valida el workflow automaticamente
 
