@@ -2,17 +2,17 @@
 
 ## Objetivo de aprendizaje
 
-Antes de corregir riesgos hay que tener un ejemplo inseguro reconocible. Este paso crea esa base para que el resto del tutorial tenga algo que escanear y remediar.
+Antes de escanear o remediar hace falta una plantilla mínima sobre la que trabajar. En este paso vas a crear una base S3 sencilla, todavía incompleta desde el punto de vista de endurecimiento, para que el resto del tutorial tenga un artefacto real que analizar.
 
 ## Que vas a cambiar y por que
 
-Define un recurso deliberadamente simple y con una debilidad visible que más adelante se corregirá.
+Define en `iac/main.tf` un bucket y el bloque de control de acceso público que servirá como punto de partida. Aunque ya aparece una medida de protección, la plantilla sigue siendo básica y no representa un hardening completo; justamente por eso es útil como primer ejemplo revisable.
 
 ## Archivo y seccion que debes modificar
 
 - Archivo objetivo: `iac/main.tf`.
-- Aplícalo en la parte del archivo que corresponde al título del paso.
-- Si el archivo aún no existe, créalo con este contenido inicial y luego evoluciona desde ahí en los siguientes pasos.
+- Si el archivo aún no existe, créalo en este paso.
+- Mantén el cambio pequeño y centrado en el recurso S3 que se usará en el resto del recorrido.
 
 ## Cambio base recomendado
 
@@ -22,19 +22,25 @@ Este bloque no es para pegar a ciegas: úsalo como punto de partida y ajústalo 
 resource "aws_s3_bucket" "app" {
   bucket = "demo-bucket"
 }
+
+resource "aws_s3_bucket_public_access_block" "app" {
+  bucket = aws_s3_bucket.app.id
+
+  block_public_policy = true
+}
 ```
 
 ## Como adaptarlo correctamente
 
-- Mantén el ejemplo pequeño; basta un bucket o un security group para ilustrar el riesgo.
-- No intentes meter varios riesgos a la vez en el mismo paso.
-- Deja el recurso en `iac/main.tf` para que los pasos siguientes trabajen sobre el mismo archivo.
+- No conviertas este paso en la corrección final de todos los riesgos; aquí solo necesitas una base clara para escanear.
+- Asegúrate de que el archivo contenga tanto el recurso `aws_s3_bucket` como el bloque `aws_s3_bucket_public_access_block`.
+- Deja visible `block_public_policy` porque el validador usa ese marcador como parte de la estructura esperada.
 
 ## Que deberia verse al terminar
 
-- Existe un recurso base en `iac/main.tf`.
-- La inseguridad inicial es fácil de entender por lectura.
-- El siguiente paso puede escanear exactamente ese archivo.
+- Existe un archivo `iac/main.tf` con un bucket base y un bloque de acceso público asociado.
+- La plantilla sigue siendo lo bastante simple como para usarla como ejemplo de análisis en los pasos siguientes.
+- El siguiente paso puede escanear exactamente ese archivo sin cambiar de superficie.
 
 ## Que valida el workflow automaticamente
 
